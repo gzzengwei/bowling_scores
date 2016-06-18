@@ -10,21 +10,21 @@ RSpec.describe Player, type: :model do
 
     context 'for 12 strike in a row' do
       before { build_frames(player, :strike) }
-      it 'score 300' do
+      it 'handle strike bonus' do
         expect(subject).to eq(300)
       end
     end
 
     context 'for spare' do
       before { build_frames(player, :spare) }
-      it 'score 000' do
+      it 'handle spare bonus' do
         expect(subject).to eq(181)
       end
     end
 
     context 'for others' do
       before { build_frames(player, :random) }
-      it 'score 000' do
+      it 'handle no bonus' do
         expect(subject).to eq(90)
       end
     end
