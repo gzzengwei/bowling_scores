@@ -1,0 +1,41 @@
+%h1 Listing games
+
+%legend
+
+- if notice
+  .alert.alert-success#notice
+    %button.close{:type => 'button', :data => {dismiss: 'alert'}, 'aria-label' => 'Close'}
+      %span{'aria-hidden' => true}
+        &times;
+    = notice
+
+%table.table
+  %thead
+    %tr
+      %th Game
+      %th Status
+      %th Players
+      %th Winner
+      %th Action
+
+  %tbody
+    - if @games.any?
+      - @games.each do |game|
+        %tr
+          %td= game.id
+          %td= game.status
+          %td= game.players.length
+          %td= game.winner
+          %td= link_to 'Show', game, class: 'btn btn-primary btn-xs'
+    - else
+      %tr.info
+        %td{colspan: '100%'}
+          No Games
+
+%br
+
+.action
+  = link_to 'New Game', new_game_path, class: 'btn btn-primary btn-sm'
+  - if @games.any?
+    .pull-right
+      = link_to 'Clear All Games', clear_all_games_path, class: 'btn btn-danger btn-sm', data: {confirm: 'You sure?'}, method: 'POST'

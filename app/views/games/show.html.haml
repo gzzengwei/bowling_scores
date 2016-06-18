@@ -1,0 +1,26 @@
+%h2 Game #{@game.id}
+
+%legend
+
+- if notice
+  .alert.alert-success#notice
+    %button.close{:type => 'button', :data => {dismiss: 'alert'}, 'aria-label' => 'Close'}
+      %span{'aria-hidden' => true}
+        &times;
+    = notice
+
+
+%table.table.table-bordered
+  %thead
+    %tr
+      %th Name
+      - 10.times do |i|
+        %th
+          Frame #{i+1}
+      %th Final
+      %th Action
+  %tbody
+  - @game.players.each do |p|
+    = render partial: 'player_row', locals: { player: p }
+
+= link_to 'Back', games_path, class: 'btn btn-default btn-sm'

@@ -1,0 +1,19 @@
+%tr{class: (player.winner? ? 'success' : nil) }
+  %td
+    = player.name
+  - 1.upto(Frame::MAX).each do |round|
+    %td
+      = present(:frame, player.frame_of(round)).summary
+      %br
+      = player.score_display(round)
+
+  %td
+    %br
+    %strong
+      = player.final_score if player.finished?
+
+  %td
+    %br
+    - unless player.finished?
+      = link_to 'Play', edit_game_player_path(@game, player), class: 'btn btn-primary btn-sm'
+

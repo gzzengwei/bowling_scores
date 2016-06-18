@@ -1,0 +1,30 @@
+= form_for @player, html: {class: 'form form-horizontal', role: 'form'} do |f|
+  - if @player.errors.any?
+    .alert.alert-danger#error_explanation
+      %button.close{:type => 'button', :data => {dismiss: 'alert'}, 'aria-label' => 'Close'}
+        %span{'aria-hidden' => true}
+          &times;
+      %h4= "#{pluralize(@player.errors.count, "error")} prohibited this player from being saved:"
+      %ul
+        - @player.errors.full_messages.each do |msg|
+          %li= msg
+
+
+  = f.fields_for :frames, @player.frames do |frame_fields|
+    .row
+      .form-group
+        %label.control-label.col-sm-2
+          = "Frame #{frame_fields.object.round}"
+          = frame_fields.hidden_field :id
+        .col-sm-2
+          = frame_fields.text_field :roll_1, class: "form-control", placeholder: 'First roll'
+        .col-sm-2
+          = frame_fields.text_field :roll_2, class: "form-control", placeholder: 'Second roll'
+        - if frame_fields.object.last_frame?
+          .col-sm-2
+            = frame_fields.text_field :roll_3, class: "form-control", placeholder: 'Third roll'
+
+  .actions
+    = link_to 'Back', game_path(@player.game), class: 'btn btn-default'
+    .pull-right
+      = f.submit 'Save', class: 'btn btn-primary'
