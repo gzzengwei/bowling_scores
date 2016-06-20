@@ -1,6 +1,8 @@
 class Frame < ActiveRecord::Base
   belongs_to :player
 
+  default_scope { order('round ASC') }
+
   after_save :update_player_status
 
   validates :roll_1, :roll_2, :roll_3,
